@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
@@ -18,7 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
@@ -68,13 +71,20 @@ public class MealServlet extends HttpServlet {
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
+            case "filter":
+                LocalDate startDate = DateTimeUtil.parseDate(request.getParameter("startDate"), true);
+                LocalDate endDate = DateTimeUtil.parseDate(request.getParameter("endDate"), false);
+                LocalTime startTime = DateTimeUtil.parseTime(request.getParameter("startTime"), true);
+                LocalTime endTime = DateTimeUtil.parseTime(request.getParameter("endTime"), false);
+                request.setAttribute("meals", mealRestController.getAllBetween(startDate, endDate, startTime, endTime));
+                break;
             case "all":
             default:
                 log.info("getAll");
                 request.setAttribute("meals", mealRestController.getAll());
-                request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 
     private int getId(HttpServletRequest request) {

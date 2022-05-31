@@ -10,6 +10,8 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -50,5 +52,11 @@ public class MealRestController {
         int userId = SecurityUtil.authUserId();
         log.info("Get all meals for user {}", userId);
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
+    }
+
+    public List<MealTo> getAllBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+        int userId = SecurityUtil.authUserId();
+        log.info("Get all meals for user {} filtered by date and time", userId);
+        return MealsUtil.getTos(service.getAllBetween(userId, startDate, endDate, startTime, endTime), SecurityUtil.authUserCaloriesPerDay());
     }
 }
