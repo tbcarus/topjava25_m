@@ -24,38 +24,38 @@ public class MealRestController {
     }
 
     public Meal create(Meal meal) {
-        int userId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.getAuthUserId();
         log.info("Create meal {} for user {}", meal, userId);
         ValidationUtil.checkNew(meal);
         return service.create(meal, userId);
     }
 
     public Meal get(int id) {
-        int userId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.getAuthUserId();
         log.info("Get meal {} for user {}", id, userId);
         return service.get(id, userId);
     }
 
     public void update(Meal meal) {
-        int userId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.getAuthUserId();
         log.info("Update meal {} for user {}", meal, userId);
         service.update(meal, userId);
     }
 
     public void delete(int id) {
-        int userId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.getAuthUserId();
         log.info("Delete meal {} for user {}", id, userId);
         service.delete(id, userId);
     }
 
     public List<MealTo> getAll() {
-        int userId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.getAuthUserId();
         log.info("Get all meals for user {}", userId);
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
     }
 
     public List<MealTo> getAllBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
-        int userId = SecurityUtil.authUserId();
+        int userId = SecurityUtil.getAuthUserId();
         log.info("Get all meals for user {} filtered by date and time", userId);
         return MealsUtil.getTos(service.getAllBetween(userId, startDate, endDate, startTime, endTime), SecurityUtil.authUserCaloriesPerDay());
     }

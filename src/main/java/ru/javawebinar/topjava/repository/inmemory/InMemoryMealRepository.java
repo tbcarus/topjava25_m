@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.meals.forEach(meal -> save(meal, SecurityUtil.authUserId()));
+        MealsUtil.meals.forEach(meal -> save(meal, SecurityUtil.getAuthUserId()));
         save(new Meal(LocalDateTime.of(2021, Month.JANUARY, 30, 10, 0), "Завтрак п1", 500), 1);
         save(new Meal(LocalDateTime.of(2021, Month.JANUARY, 30, 13, 0), "Обед п2", 1000), 2);
     }
