@@ -184,6 +184,25 @@
 
     <profiles>
         <profile>
+            <id>jdbc</id>
+            <dependencies>
+
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jpa</id>
+            <dependencies>
+
+            </dependencies>
+        </profile>
+        <profile>
+            <id>datajpa</id>
+            <dependencies>
+
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>hsqldb</id>
             <dependencies>
                 <dependency>
